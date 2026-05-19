@@ -1,0 +1,41 @@
+{
+  "name": "@achilliesbot/agentiam-mcp",
+  "version": "0.1.0",
+  "description": "Stdio MCP server wrapping the 18 AgentIAM x402 endpoints — agent identity, safety, and intelligence for autonomous agents on Base Mainnet.",
+  "type": "module",
+  "main": "src/index.mjs",
+  "bin": {
+    "agentiam-mcp": "src/index.mjs"
+  },
+  "scripts": {
+    "start": "node src/index.mjs",
+    "inspect": "node src/index.mjs --inspect"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.20.0"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "files": [
+    "src/",
+    "README.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "x402",
+    "agent-identity",
+    "agent-safety",
+    "base-mainnet",
+    "usdc"
+  ],
+  "homepage": "https://achillesalpha.com",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/achilliesbot/agentiam-mcp.git"
+  },
+  "license": "MIT",
+  "author": "Achilles <achilles@achillesalpha.com>"
+}
