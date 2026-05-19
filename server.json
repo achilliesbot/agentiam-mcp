@@ -1,0 +1,10 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.achilliesbot/agentiam-mcp",
+  "description": "Stdio MCP wrapper for AgentIAM's 18 x402 endpoints — agent safety + intelligence on Base.",
+  "repository": {
+    "url": "https://github.com/achilliesbot/agentiam-mcp",
+    "source": "github"
+  },
+  "version": "0.1.0"
+}
