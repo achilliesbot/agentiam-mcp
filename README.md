@@ -17,7 +17,65 @@ Pricing: $0.001–$0.05 USDC per call, settled on Base via x402.
 
 ## Status
 
-🚧 **Skeleton.** Wiring underway. Pin `main` for the latest; tag releases will follow once the payment-flow tests pass.
+**v0.1.0 — discovery mode.** All 18 tools are registered. Tool calls return the AgentIAM endpoint's decoded x402 challenge (resource URL, accepts array, bazaar extension, schema), so MCP clients can browse the catalog without holding USDC. Wallet-signed payment flow (per-call USDC settlement) ships in v0.2.
+
+## Install
+
+```bash
+git clone https://github.com/achilliesbot/agentiam-mcp.git
+cd agentiam-mcp
+npm install
+```
+
+## Run (standalone)
+
+```bash
+node src/index.mjs
+# stdio MCP server — speaks JSON-RPC over stdin/stdout
+```
+
+## Configure in Claude Desktop / Cursor / VS Code
+
+Add to your MCP config (`claude_desktop_config.json` on macOS at
+`~/Library/Application Support/Claude/claude_desktop_config.json`):
+
+```json
+{
+  "mcpServers": {
+    "agentiam": {
+      "command": "node",
+      "args": ["/absolute/path/to/agentiam-mcp/src/index.mjs"]
+    }
+  }
+}
+```
+
+Restart the client. The 18 AgentIAM tools (`noleak`, `memguard`, `riskoracle`,
+`secureexec`, `flowcore`, `audit`, `validate`, `risk_check`, `research`,
+`intelligence_report`, `delphi`, `delphi_entity`, `delphi_query`,
+`delphi_timeline`, `delphi_contradictions`, `latest_signals`, `signal_query`,
+`publish_signal`) appear in the tool picker.
+
+## Run via Docker
+
+```bash
+docker build -t agentiam-mcp .
+docker run -i agentiam-mcp
+```
+
+## Smoke test
+
+```bash
+( echo '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2024-11-05","capabilities":{},"clientInfo":{"name":"smoke","version":"0.1"}}}'
+  sleep 0.3
+  echo '{"jsonrpc":"2.0","method":"notifications/initialized"}'
+  sleep 0.3
+  echo '{"jsonrpc":"2.0","id":2,"method":"tools/list"}'
+  sleep 1
+) | node src/index.mjs
+```
+
+You should see a JSON-RPC response listing 18 tools.
 
 ## Discovery references
 
