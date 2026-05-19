@@ -75,13 +75,20 @@ server.setRequestHandler(CallToolRequestSchema, async (req) => {
   });
   const text = await resp.text();
   if (resp.status === 402) {
+    const header = resp.headers.get("payment-required");
+    let challenge = text;
+    if (header) {
+      try {
+        challenge = JSON.stringify(JSON.parse(Buffer.from(header, "base64").toString("utf8")), null, 2);
+      } catch { /* fall back to raw header */ challenge = header; }
+    }
     return {
       content: [{
         type: "text",
         text: `402 Payment Required — $${tool.price} USDC.\n\n` +
               `This MCP wrapper currently surfaces AgentIAM's 402 challenge for discovery. ` +
               `To call paid, sign an x402 payment header and POST directly to ${BASE}${tool.path}.\n\n` +
-              `Challenge body:\n${text}`,
+              `Challenge:\n${challenge}`,
       }],
     };
   }
